@@ -1,0 +1,40 @@
+{
+  "robotWidth": 0.864,
+  "robotLength": 0.864,
+  "holonomicMode": true,
+  "pathFolders": [
+    "Blue Paths",
+    "Red Paths"
+  ],
+  "autoFolders": [
+    "Blue",
+    "Red"
+  ],
+  "defaultMaxVel": 5.5,
+  "defaultMaxAccel": 4.25,
+  "defaultMaxAngVel": 6030.0,
+  "defaultMaxAngAccel": 1200.0,
+  "defaultNominalVoltage": 12.0,
+  "robotMass": 63.049,
+  "robotMOI": 6404.0,
+  "robotTrackwidth": 1.5,
+  "driveWheelRadius": 0.116,
+  "driveGearing": 6.75,
+  "maxDriveSpeed": 5800.0,
+  "driveMotorType": "vortex",
+  "driveCurrentLimit": 60.0,
+  "wheelCOF": 1.1,
+  "flModuleX": 0.65,
+  "flModuleY": 0.65,
+  "frModuleX": 0.65,
+  "frModuleY": -0.0,
+  "blModuleX": 0.0,
+  "blModuleY": 0.65,
+  "brModuleX": 0.0,
+  "brModuleY": 0.0,
+  "bumperOffsetX": 0.325,
+  "bumperOffsetY": 0.325,
+  "robotFeatures": [
+    "{\"name\":\"Rectangle\",\"type\":\"rounded_rect\",\"data\":{\"center\":{\"x\":-0.2,\"y\":0.325},\"size\":{\"width\":0.9,\"length\":0.2},\"borderRadius\":0.05,\"strokeWidth\":0.02,\"filled\":false}}"
+  ]
+}

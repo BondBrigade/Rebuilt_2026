@@ -1,0 +1,113 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 12.661525297619049,
+        "y": 3.6956845238095237
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 13.661525297619049,
+        "y": 3.6956845238095237
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 13.60116815476596,
+        "y": 7.728318452377117
+      },
+      "prevControl": {
+        "x": 16.61585565476596,
+        "y": 7.356376488091403
+      },
+      "nextControl": {
+        "x": 11.615414533047243,
+        "y": 7.9733140290826725
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 9.320572916666666,
+        "y": 6.8996056547619045
+      },
+      "prevControl": {
+        "x": 9.292965035146691,
+        "y": 7.148076588430169
+      },
+      "nextControl": {
+        "x": 9.349405865709741,
+        "y": 6.640109113386247
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 9.340148809523809,
+        "y": 1.1312425595238096
+      },
+      "prevControl": {
+        "x": 9.340148809523809,
+        "y": 1.3812425595238096
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.1250000000000004,
+      "rotationDegrees": 180.0
+    },
+    {
+      "waypointRelativePos": 2.091216216216214,
+      "rotationDegrees": 119.99999999999999
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [
+    {
+      "fieldPosition": {
+        "x": 12.0,
+        "y": 4.0
+      },
+      "rotationOffset": 0.0,
+      "minWaypointRelativePos": 0.2794520547945205,
+      "maxWaypointRelativePos": 1.0273972602739718,
+      "name": "Point Towards Zone"
+    }
+  ],
+  "eventMarkers": [
+    {
+      "name": "RunShooterManualCommand",
+      "waypointRelativePos": 0.24246575342465762,
+      "endWaypointRelativePos": 1.0479452054794527,
+      "command": null
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.5,
+    "maxAcceleration": 4.25,
+    "maxAngularVelocity": 6030.0,
+    "maxAngularAcceleration": 1200.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 119.99999999999999
+  },
+  "reversed": false,
+  "folder": "Red Paths",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

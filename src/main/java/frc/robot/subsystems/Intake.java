@@ -14,14 +14,15 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 public class Intake extends SubsystemBase {
   private SparkMax deployIntakeMotor;
-  private SparkFlex intakeMotor;
+  private SparkMax intakeMotor;
 
   public double opInput_leftTrigger = 0;
+  public double opInput_leftY = 0;
 
   /** Creates a new Intake Subsystem. */
   public Intake() {
     deployIntakeMotor = new SparkMax(Constants.Intake.deployIntakeMotorId, MotorType.kBrushless);
-    intakeMotor = new SparkFlex(Constants.Intake.intakeMotorId, MotorType.kBrushless);
+    intakeMotor = new SparkMax(Constants.Intake.intakeMotorId, MotorType.kBrushless);
   }
 
   public void deployIntake(double speed)
@@ -31,7 +32,7 @@ public class Intake extends SubsystemBase {
 
   public void runIntake(double inputSpeed)
   {
-    this.intakeMotor.set(inputSpeed);
+    this.intakeMotor.set(-inputSpeed);
   }
 
   /**
@@ -71,6 +72,11 @@ public class Intake extends SubsystemBase {
   public void setLeftTrigger(double arg)
   {
     opInput_leftTrigger = arg;
+  }
+
+  public void setLeftY(double arg)
+  {
+    opInput_leftY = arg;
   }
 
 }

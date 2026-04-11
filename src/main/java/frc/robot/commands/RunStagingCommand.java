@@ -34,7 +34,7 @@ public class RunStagingCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    inputSpeed = stagingSubsystem.opInput_rightY;
+    inputSpeed = stagingSubsystem.opInput_RightY;
     stagingSubsystem.runStagingMotor(inputSpeed);
   }
 

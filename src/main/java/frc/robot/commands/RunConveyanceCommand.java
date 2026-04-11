@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import frc.robot.Constants;
 import frc.robot.subsystems.Conveyance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -34,7 +35,27 @@ public class RunConveyanceCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    inputSpeed = conveyanceSubsystem.opInput_leftY;
+
+    double right = conveyanceSubsystem.opInput_RightY;
+    // double left = conveyanceSubsystem.opInput_LeftY;
+
+    if (right > 0.1 || right < -0.1) inputSpeed = right; 
+    else                             inputSpeed = conveyanceSubsystem.opInput_LeftY;
+    // if (left > 0.1 || left < -0.1) inputSpeed = left; 
+
+    // if (Math.abs(right) > 0.1)
+    // {
+    //   inputSpeed = right;
+    // }
+    // else if (Math.abs(left) > 0.1)
+    // {
+    //   inputSpeed = left;
+    // }
+    // else 
+    // {
+    //   inputSpeed = 0;
+    // }
+
     conveyanceSubsystem.runConveyance(inputSpeed);
   }
 

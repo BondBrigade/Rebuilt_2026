@@ -104,5 +104,10 @@ public class Shooter extends SubsystemBase {
   {
     opInput_rightTrigger = arg;
   }
+    public Runnable autoRun(double arg)
+  {
+    opInput_rightTrigger = arg;
+    return null;
+  }
 
 }

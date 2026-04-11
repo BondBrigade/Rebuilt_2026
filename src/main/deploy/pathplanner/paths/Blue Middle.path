@@ -1,0 +1,103 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.25,
+        "y": 3.75
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.0,
+        "y": 3.75
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.163691215616681,
+        "y": 3.701011535048802
+      },
+      "prevControl": {
+        "x": 1.4122685040966332,
+        "y": 3.674378254140235
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "RunConveyanceCommand",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": 0,
+      "command": null
+    },
+    {
+      "name": "RunShooterManualCommand",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
+      "name": "RunShooterManualCommand",
+      "waypointRelativePos": 0.15268456375838943,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "wait",
+              "data": {
+                "waitTime": 0.0
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "RunShooterManualCommand"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "RunStagingCommand"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "RunConveyanceCommand"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.5,
+    "maxAcceleration": 4.25,
+    "maxAngularVelocity": 6030.0,
+    "maxAngularAcceleration": 1200.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": false,
+  "folder": "Blue Paths",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}
