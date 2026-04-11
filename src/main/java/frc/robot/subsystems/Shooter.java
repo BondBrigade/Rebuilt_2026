@@ -7,22 +7,30 @@ package frc.robot.subsystems;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
+import com.revrobotics.spark.FeedbackSensor;
 import com.revrobotics.spark.SparkClosedLoopController;
+import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.ClosedLoopConfig;
+import com.revrobotics.spark.config.SparkBaseConfig;
+import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 public class Shooter extends SubsystemBase {
-  private SparkMax shooterMotor;
+  private SparkFlex shooterMotor;
   private SparkMax hoodAngleMotor;
   private DutyCycleEncoder hoodAngleEncoder;
 
-  private SparkMaxConfig config;
+  private SparkFlexConfig config;
 
   private SparkClosedLoopController shooter_pidController;
   private final PIDController angle_pidController;
@@ -31,7 +39,7 @@ public class Shooter extends SubsystemBase {
 
   /** Creates a new Shooter Subsystem. */
   public Shooter() {
-    shooterMotor = new SparkMax(Constants.Shooter.shooterMotorId, MotorType.kBrushless);
+    shooterMotor = new SparkFlex(Constants.Shooter.shooterMotorId, MotorType.kBrushless);
     hoodAngleMotor = new SparkMax(Constants.Shooter.hoodAngleMotorId, MotorType.kBrushless);
     hoodAngleEncoder = new DutyCycleEncoder(new DigitalInput(Constants.Shooter.digitalInputChannel));
 
@@ -41,18 +49,24 @@ public class Shooter extends SubsystemBase {
 
     // Shooter PID
     shooter_pidController = shooterMotor.getClosedLoopController();
-    config = new SparkMaxConfig();
+    config = new SparkFlexConfig();
+    config.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder);
     config.closedLoop
       .p(Constants.Shooter.shooter_kP)
       .i(Constants.Shooter.shooter_kI)
       .d(Constants.Shooter.shooter_kD)
-      .outputRange(-1, 1);
+      .outputRange(-1, 1).velocityFF(1.0/6784.0);
+      shooterMotor.configure(config,ResetMode.kNoResetSafeParameters,PersistMode.kPersistParameters);
+
+
+      Shuffleboard.getTab("logging").addDouble("shooter_velocity", shooterMotor.getEncoder()::getVelocity);
+
   }
 
 
   public void runShooterManual(double speed)
   {
-    shooterMotor.set(speed);
+    shooter_pidController.setSetpoint(speed*5676.0,ControlType.kVelocity);
   }
 
   public void setHoodAngle(double targetAngle)

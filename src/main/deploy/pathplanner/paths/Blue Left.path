@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.30443655723828,
-        "y": 6.9040816326593974
+        "x": 3.6504968944099376,
+        "y": 7.2340461401952085
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.0388553682268626,
-        "y": 7.234046140194714
+        "x": 3.3849157053985204,
+        "y": 7.564010647730525
       },
       "isLocked": false,
       "linkedName": null
@@ -36,12 +36,12 @@
         "y": 6.051316964285714
       },
       "prevControl": {
-        "x": 8.035742245267672,
-        "y": 7.194120868456078
+        "x": 8.608012422360249,
+        "y": 8.481472937000888
       },
       "nextControl": {
-        "x": 7.9418522025309555,
-        "y": 5.712744638610118
+        "x": 7.876319377113671,
+        "y": 5.723408203058613
       },
       "isLocked": false,
       "linkedName": null
@@ -88,6 +88,12 @@
     }
   ],
   "eventMarkers": [
+    {
+      "name": "",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
     {
       "name": "RunShooterManualCommand",
       "waypointRelativePos": 0.4561643835616448,

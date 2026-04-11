@@ -33,7 +33,8 @@ public class Staging extends SubsystemBase
     // TODO Auto-generated method stub
 //    throw new UnsupportedOperationException("Unimplemented method 'RunStagingCommand'");
 // CF Note: Changed to Commands.none() to stop runtime errors. 
-return Commands.none(); }
+return Commands.none();
+ }
   
 
 }

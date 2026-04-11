@@ -144,11 +144,12 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    //  NamedCommands.registerCommand("RunIntakeCommand", new RunIntakeCommand(intakeSubsystem));
+      NamedCommands.registerCommand("RunIntakeCommand", new RunIntakeCommand(intakeSubsystem));
     //  // CF Note: Changed this from a Shooter method call to `new RunShooterManualCommand` to stop the runtime errors
     //     NamedCommands.registerCommand("RunS6hooterManualCommand",new RunShooterManualCommand(shooterSubsystem,0.8));
-    //     NamedCommands.registerCommand("RunStagingCommand", Staging.RunStagingCommand());
-       
+         NamedCommands.registerCommand("RunStagingCommand", new RunStagingCommand(stagingSubsystem));
+        NamedCommands.registerCommand("RunConveyanceCommand", new RunConveyanceCommand(conveyanceSubsystem));
+        NamedCommands.registerCommand("RunDeployCommand",new DeployIntakeCommand(intakeSubsystem, -0.25).withTimeout(1.0));
               
            // TODO Auto-generated method stub
           //  throw new UnsupportedOperationException("Unimplemented method 'configureButtonBindings'");
@@ -157,16 +158,13 @@ public class RobotContainer {
     configureBindings();
     
     drivebase.setupPathPlanner();
-
+    NamedCommands.registerCommand("RunShooterManualCommand",new RunShooterManualCommand(shooterSubsystem, 0.8));
+    
     autoChooser = AutoBuilder.buildAutoChooser();
 
     // autoChooser.addOption("Drive Back", DriveBackwardTimed());
 
     //Set the default auto (do nothing) 
-    autoChooser.setDefaultOption("Do Nothing", Commands.none());
-
-    //Add a simple auto option to have the robot drive forward for 1 second then stop
-    autoChooser.addOption("Drive Forward", drivebase.driveForward().withTimeout(1));
 
     //Put the autoChooser on the SmartDashboard
     SmartDashboard.putData("Auto Chooser", autoChooser);

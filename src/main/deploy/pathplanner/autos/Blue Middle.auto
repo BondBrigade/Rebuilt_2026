@@ -21,19 +21,13 @@
                 }
               },
               {
-                "type": "named",
-                "data": {
-                  "name": "RunShooterManualCommand"
-                }
-              },
-              {
-                "type": "parallel",
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 0.5
+                        "waitTime": 10.0
                       }
                     },
                     {
@@ -41,17 +35,29 @@
                       "data": {
                         "name": "RunShooterManualCommand"
                       }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "RunStagingCommand"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "RunConveyanceCommand"
+                      }
                     }
                   ]
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "RunDeployCommand"
+                }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "RunShooterManualCommand"
           }
         }
       ]

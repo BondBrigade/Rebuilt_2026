@@ -43,8 +43,8 @@ public final class Constants {
     public static final int hoodAngleMotorId = 32;
     public static final int shooterMotorId = 33;
     public static final int digitalInputChannel = 0;
-    public static final double shooter_kP = 0.15;
-    public static final double shooter_kI = 0.0001;
+    public static final double shooter_kP = 0.5/6784.0;
+    public static final double shooter_kI = 0;
     public static final double shooter_kD = 0;
     public static final double angle_kP = 0.1;
     public static final double angle_kI = 0.0001;

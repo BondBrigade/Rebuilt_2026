@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Staging;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
@@ -35,6 +36,8 @@ public class RunStagingCommand extends Command {
   @Override
   public void execute() {
     inputSpeed = stagingSubsystem.opInput_RightY;
+        if(DriverStation.isAutonomous()){inputSpeed=-0.5;}
+System.out.println("staging");
     stagingSubsystem.runStagingMotor(inputSpeed);
   }
 
