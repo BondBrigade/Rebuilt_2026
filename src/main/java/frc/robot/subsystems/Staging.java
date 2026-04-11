@@ -4,6 +4,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -20,7 +21,7 @@ public class Staging extends SubsystemBase
 
   public void runStagingMotor(double speed)
   {
-    stagingMotor.set(speed);
+    this.stagingMotor.set(speed);
   }
 
   public void setRightY(double arg)
@@ -30,8 +31,9 @@ public class Staging extends SubsystemBase
 
   public static Command RunStagingCommand() {
     // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'RunStagingCommand'");
-  }
+//    throw new UnsupportedOperationException("Unimplemented method 'RunStagingCommand'");
+// CF Note: Changed to Commands.none() to stop runtime errors. 
+return Commands.none(); }
   
 
 }

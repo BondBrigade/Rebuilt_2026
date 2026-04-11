@@ -48,14 +48,34 @@ import com.pathplanner.lib.auto.NamedCommands;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  //Define Swerve file
+  // Define Swerve file
   // private File file = new File(Filesystem.getDeployDirectory(), "swerve");
   // The robot's subsystems and commands are defined here
   private final Intake intakeSubsystem = new Intake();
   private final Conveyance conveyanceSubsystem = new Conveyance();
   private final Shooter shooterSubsystem = new Shooter();
-  private final Staging stagingSubsystem   = new Staging();
+  private final Staging stagingSubsystem = new Staging();
+  
 
+  private final SendableChooser<Command> autoChooser;{
+  // Add commands to the autonomous command chooser
+
+  //Registers Commands for PathPlanner
+          // Subsystem initialization
+        // conveyanceSubsystem = new Conveyance();
+        // shooterSubsystem = new Shooter();
+
+        // Register Named Commands
+    //     NamedCommands.registerCommand("RunIntakeCommand", new RunIntakeCommand(intakeSubsystem));
+    //  // CF Note: Changed this from a Shooter method call to `new RunShooterManualCommand` to stop the runtime errors   
+    //     NamedCommands.registerCommand("RunShooterManualCommand", new RunShooterManualCommand(shooterSubsystem,0.8));
+    //     NamedCommands.registerCommand("RunStagingCommand", Staging.RunStagingCommand());
+        // NamedCommands.registerCommand("someOtherCommand", new SomeOtherCommand());
+  
+        // Do all other initialization
+        // configureButtonBindings(); 
+  }
+        // ...
 
   // Controllers
   private final CommandXboxController driverController =
@@ -74,7 +94,7 @@ public class RobotContainer {
     
   /**
    * Converts driver input into a field-relative ChassisSpeeds that is controlled by angular velocity.
-   */
+   */ 
   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(
     drivebase.getSwerveDrive(),
         () -> driverController.getLeftY() * -1,
@@ -124,9 +144,10 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-     NamedCommands.registerCommand("RunIntakeCommand", new RunIntakeCommand(intakeSubsystem));
-        NamedCommands.registerCommand("RunS6hooterManualCommand", Shooter.RunShooterManualCommand());
-        NamedCommands.registerCommand("RunStagingCommand", Staging.RunStagingCommand());
+    //  NamedCommands.registerCommand("RunIntakeCommand", new RunIntakeCommand(intakeSubsystem));
+    //  // CF Note: Changed this from a Shooter method call to `new RunShooterManualCommand` to stop the runtime errors
+    //     NamedCommands.registerCommand("RunS6hooterManualCommand",new RunShooterManualCommand(shooterSubsystem,0.8));
+    //     NamedCommands.registerCommand("RunStagingCommand", Staging.RunStagingCommand());
        
               
            // TODO Auto-generated method stub
