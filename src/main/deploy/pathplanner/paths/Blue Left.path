@@ -3,29 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.6504968944099376,
-        "y": 7.2340461401952085
+        "x": 2.0,
+        "y": 6.5
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.3849157053985204,
-        "y": 7.564010647730525
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 1.3970807453342278,
-        "y": 6.8799378881982625
-      },
-      "prevControl": {
-        "x": 1.7240183319679698,
-        "y": 6.182471036712946
-      },
-      "nextControl": {
-        "x": 1.2763620230627104,
-        "y": 7.1374711623775
+        "x": 1.1151364175563474,
+        "y": 7.41876631079478
       },
       "isLocked": false,
       "linkedName": null
@@ -62,74 +46,26 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.4302325581395354,
+      "waypointRelativePos": 0.40957446808510856,
       "rotationDegrees": 20.0
     },
     {
-      "waypointRelativePos": 1.9532803180914478,
+      "waypointRelativePos": 1.0,
       "rotationDegrees": 70.0
     },
     {
-      "waypointRelativePos": 2.6479915433403844,
+      "waypointRelativePos": 1.6479915433403844,
       "rotationDegrees": 70.0
     }
   ],
   "constraintZones": [],
-  "pointTowardsZones": [
-    {
-      "fieldPosition": {
-        "x": 4.6,
-        "y": 4.0
-      },
-      "rotationOffset": 0.0,
-      "minWaypointRelativePos": 0.34644670050761367,
-      "maxWaypointRelativePos": 1.229695431472083,
-      "name": "Point Towards Zone"
-    }
-  ],
-  "eventMarkers": [
-    {
-      "name": "",
-      "waypointRelativePos": 0,
-      "endWaypointRelativePos": null,
-      "command": null
-    },
-    {
-      "name": "RunShooterManualCommand",
-      "waypointRelativePos": 0.4561643835616448,
-      "endWaypointRelativePos": 1.2698630136986298,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "RunStagingCommand"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "RunConveyanceCommand"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": " RunIntakeCommand",
-      "waypointRelativePos": 1.795890410958903,
-      "endWaypointRelativePos": 3.0,
-      "command": null
-    }
-  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 575147.52,
-    "maxAcceleration": 12.33,
-    "maxAngularVelocity": 1300.0,
-    "maxAngularAcceleration": 13000.0,
+    "maxVelocity": 1.0,
+    "maxAcceleration": 4.25,
+    "maxAngularVelocity": 300.0,
+    "maxAngularAcceleration": 300.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
@@ -141,7 +77,7 @@
   "folder": "Blue Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -50.0
   },
   "useDefaultConstraints": false
 }

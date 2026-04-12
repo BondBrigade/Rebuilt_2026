@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import static edu.wpi.first.units.Units.Meter;
 
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -15,11 +16,15 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Config;
 import frc.robot.Constants;
+import frc.robot.LimelightHelpers;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.function.DoubleSupplier;
@@ -100,11 +105,25 @@ public class SwerveSubsystem extends SubsystemBase
                                   Constants.Swerve.maxSpeed,
                                   new Pose2d(new Translation2d(Meter.of(2), Meter.of(0)),
                                              Rotation2d.fromDegrees(0)));
+                                             Shuffleboard.getTab("logging").add("limelight",f2d);
+                                             swerveDrive.zeroGyro();
+                                             LimelightHelpers.SetIMUMode("limelight", 1);
+                                                 LimelightHelpers.SetRobotOrientation("limelight", 0, 0, 0, 0, 0, 0);
+Shuffleboard.getTab("logging").add(f2d);
   }
-
+Field2d f2d=new Field2d();
   @Override
   public void periodic()
   {
+
+    System.out.println(LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight").pose);
+    f2d.setRobotPose(LimelightHelpers.getBotPose2d( "limelight"));
+    LimelightHelpers.SetRobotOrientation("limelight", getPose().getRotation().getDegrees(), 0, 0, 0, 0, 0);
+    var estimate=LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
+if (estimate.tagCount!=0){
+  swerveDrive.setVisionMeasurementStdDevs(VecBuilder.fill(.7,.7,900));}
+    //swerveDrive.addVis  ionMeasurement(new Pose2d(estimate.pose.getTranslation(),getPose().getRotation()), estimate.timestampSeconds);}
+
   }
 
   @Override

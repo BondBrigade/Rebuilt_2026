@@ -7,6 +7,43 @@
         {
           "type": "path",
           "data": {
+            "pathName": "New Path"
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 5.0
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "RunShooterManualCommand"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "RunStagingCommand"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "RunConveyanceCommand"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
             "pathName": "Blue Left"
           }
         }
