@@ -4,11 +4,9 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Staging;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 /** RunStagingCommand that uses the Conveyance subsystem. */
 public class RunStagingCommand extends Command {

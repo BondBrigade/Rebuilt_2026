@@ -6,7 +6,6 @@ package frc.robot.commands;
 
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 /** RunIntakeCommand command that uses the Intake subsystem. */
 public class RunIntakeCommand extends Command {
