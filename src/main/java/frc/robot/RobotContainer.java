@@ -94,12 +94,19 @@ public class RobotContainer {
     
   /**
    * Converts driver input into a field-relative ChassisSpeeds that is controlled by angular velocity.
-   */ 
+   */
+  class ModdedDriveState{
+    public boolean slowmode=false;
+    public ModdedDriveState(){}
+  }
+
+  ModdedDriveState moddedDriveState=new ModdedDriveState();
+
   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(
     drivebase.getSwerveDrive(),
-        () -> driverController.getLeftY() * -1,
-        () -> driverController.getLeftX() * -1)
-    .withControllerRotationAxis(() -> driverController.getRightX() * -1)
+        () -> driverController.getLeftY() * -1*(moddedDriveState.slowmode?0.5:1.0),
+        () -> driverController.getLeftX() * -1*(moddedDriveState.slowmode?0.5:1.0))
+    .withControllerRotationAxis(() -> driverController.getRightX() * -1*(moddedDriveState.slowmode?0.5:1.0))
     .deadband(Constants.Controller.kThreshold)
 
     .scaleTranslation(0.8)
@@ -242,6 +249,7 @@ public class RobotContainer {
     Command driveRobotOrientedAngularVelocity  = drivebase.driveFieldOriented(driveRobotOriented);
     Command driveFieldOrientedDirectAngleKeyboard      = drivebase.driveFieldOriented(driveDirectAngleKeyboard);
     Command driveFieldOrientedAnglularVelocityKeyboard = drivebase.driveFieldOriented(driveAngularVelocityKeyboard);
+   driverController.y().whileTrue(Commands.runEnd(()->moddedDriveState.slowmode=true,()->moddedDriveState.slowmode=false ));
 
     if (RobotBase.isSimulation())
     {
