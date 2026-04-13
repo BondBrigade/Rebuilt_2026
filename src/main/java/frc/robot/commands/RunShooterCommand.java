@@ -9,42 +9,42 @@
 
 // /** RunShooterCommand that uses the Shooter subsystem. */
 // public class RunShooterCommand extends Command {
-//   @SuppressWarnings("PMD.UnusedPrivateField")
-//   private final Shooter shooterSubsystem;
-//   private double targetSpeed;
+// @SuppressWarnings("PMD.UnusedPrivateField")
+// private final Shooter shooterSubsystem;
+// private double targetSpeed;
 
-//   /**
-//    * Creates a new RunShooterCommand.
-//    *
-//    * @param subsystem The subsystem used by this command.
-//    * @param targetSpeed The target speed to run the shooter, as a double
-//    */
-//   public RunShooterCommand(Shooter subsystem, double targetSpeed) {
-//     shooterSubsystem = subsystem;
-//     this.targetSpeed = targetSpeed;
-//     // Use addRequirements() here to declare subsystem dependencies.
-//     addRequirements(subsystem);
-//   }
+// /**
+// * Creates a new RunShooterCommand.
+// *
+// * @param subsystem The subsystem used by this command.
+// * @param targetSpeed The target speed to run the shooter, as a double
+// */
+// public RunShooterCommand(Shooter subsystem, double targetSpeed) {
+// shooterSubsystem = subsystem;
+// this.targetSpeed = targetSpeed;
+// // Use addRequirements() here to declare subsystem dependencies.
+// addRequirements(subsystem);
+// }
 
-//   // Called when the command is initially scheduled.
-//   @Override
-//   public void initialize() {}
+// // Called when the command is initially scheduled.
+// @Override
+// public void initialize() {}
 
-//   // Called every time the scheduler runs while the command is scheduled.
-//   @Override
-//   public void execute() {
-//     shooterSubsystem.runShooter(targetSpeed);
-//   }
+// // Called every time the scheduler runs while the command is scheduled.
+// @Override
+// public void execute() {
+// shooterSubsystem.runShooter(targetSpeed);
+// }
 
-//   // Called once the command ends or is interrupted.
-//   @Override
-//   public void end(boolean interrupted) {
-//     shooterSubsystem.runShooter(0);
-//   }
+// // Called once the command ends or is interrupted.
+// @Override
+// public void end(boolean interrupted) {
+// shooterSubsystem.runShooter(0);
+// }
 
-//   // Returns true when the command should end.
-//   @Override
-//   public boolean isFinished() {
-//     return false;
-//   }
+// // Returns true when the command should end.
+// @Override
+// public boolean isFinished() {
+// return false;
+// }
 // }

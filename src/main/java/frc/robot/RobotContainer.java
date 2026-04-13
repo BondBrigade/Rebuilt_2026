@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-
 import java.io.File;
 import frc.robot.Constants;
 import frc.robot.commands.DeployIntakeCommand;
@@ -42,9 +41,12 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
 /**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in
+ * the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of
+ * the robot (including
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
@@ -55,155 +57,177 @@ public class RobotContainer {
   private final Conveyance conveyanceSubsystem = new Conveyance();
   private final Shooter shooterSubsystem = new Shooter();
   private final Staging stagingSubsystem = new Staging();
-  
 
-  private final SendableChooser<Command> autoChooser;{
-  // Add commands to the autonomous command chooser
+  private final SendableChooser<Command> autoChooser;
+  {
+    // Add commands to the autonomous command chooser
 
-  //Registers Commands for PathPlanner
-          // Subsystem initialization
-        // conveyanceSubsystem = new Conveyance();
-        // shooterSubsystem = new Shooter();
+    // Registers Commands for PathPlanner
+    // Subsystem initialization
+    // conveyanceSubsystem = new Conveyance();
+    // shooterSubsystem = new Shooter();
 
-        // Register Named Commands
-    //     NamedCommands.registerCommand("RunIntakeCommand", new RunIntakeCommand(intakeSubsystem));
-    //  // CF Note: Changed this from a Shooter method call to `new RunShooterManualCommand` to stop the runtime errors   
-    //     NamedCommands.registerCommand("RunShooterManualCommand", new RunShooterManualCommand(shooterSubsystem,0.8));
-    //     NamedCommands.registerCommand("RunStagingCommand", Staging.RunStagingCommand());
-        // NamedCommands.registerCommand("someOtherCommand", new SomeOtherCommand());
-  
-        // Do all other initialization
-        // configureButtonBindings(); 
+    // Register Named Commands
+    // NamedCommands.registerCommand("RunIntakeCommand", new
+    // RunIntakeCommand(intakeSubsystem));
+    // // CF Note: Changed this from a Shooter method call to `new
+    // RunShooterManualCommand` to stop the runtime errors
+    // NamedCommands.registerCommand("RunShooterManualCommand", new
+    // RunShooterManualCommand(shooterSubsystem,0.8));
+    // NamedCommands.registerCommand("RunStagingCommand",
+    // Staging.RunStagingCommand());
+    // NamedCommands.registerCommand("someOtherCommand", new SomeOtherCommand());
+
+    // Do all other initialization
+    // configureButtonBindings();
   }
-        // ...
+  // ...
 
   // Controllers
-  private final CommandXboxController driverController =
-      new CommandXboxController(Constants.Controller.kDriverControllerPort);
-  private final CommandXboxController operatorController =
-      new CommandXboxController(Constants.Controller.kOperatorControllerPort);
+  private final CommandXboxController driverController = new CommandXboxController(
+      Constants.Controller.kDriverControllerPort);
+  private final CommandXboxController operatorController = new CommandXboxController(
+      Constants.Controller.kOperatorControllerPort);
 
-  private double  opInput_leftY = 0;
-  private double  opInput_rightY = 0;
-  private double  opInput_leftTrigger = 0;
-  private double  opInput_rightTrigger = 0;
+  private double opInput_leftY = 0;
+  private double opInput_rightY = 0;
+  private double opInput_leftTrigger = 0;
+  private double opInput_rightTrigger = 0;
 
   // The robot's subsystems and commands are defined here...
-  private final SwerveSubsystem drivebase = 
-    new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve/neo"));
-    
+  private final SwerveSubsystem drivebase = new SwerveSubsystem(
+      new File(Filesystem.getDeployDirectory(), "swerve/neo"));
+
   /**
-   * Converts driver input into a field-relative ChassisSpeeds that is controlled by angular velocity.
+   * Converts driver input into a field-relative ChassisSpeeds that is controlled
+   * by angular velocity.
    */
-  class ModdedDriveState{
-    public boolean slowmode=false;
-    public ModdedDriveState(){}
+  class ModdedDriveState {
+    public boolean slowmode = false;
+
+    public ModdedDriveState() {
+    }
   }
 
-  ModdedDriveState moddedDriveState=new ModdedDriveState();
+  ModdedDriveState moddedDriveState = new ModdedDriveState();
 
   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(
-    drivebase.getSwerveDrive(),
-        () -> driverController.getLeftY() * -1*(moddedDriveState.slowmode?0.5:1.0),
-        () -> driverController.getLeftX() * -1*(moddedDriveState.slowmode?0.5:1.0))
-    .withControllerRotationAxis(() -> driverController.getRightX() * -1*(moddedDriveState.slowmode?0.5:1.0))
-    .deadband(Constants.Controller.kThreshold)
+      drivebase.getSwerveDrive(),
+      () -> driverController.getLeftY() * -1 * (moddedDriveState.slowmode ? 0.5 : 1.0),
+      () -> driverController.getLeftX() * -1 * (moddedDriveState.slowmode ? 0.5 : 1.0))
+      .withControllerRotationAxis(() -> driverController.getRightX() * -1 * (moddedDriveState.slowmode ? 0.5 : 1.0))
+      .deadband(Constants.Controller.kThreshold)
 
-    .scaleTranslation(0.8)
-    .allianceRelativeControl(true);
+      .scaleTranslation(0.8)
+      .allianceRelativeControl(true);
 
   /**
-   * Clone's the angular velocity input stream and converts it to a fieldRelative input stream.
+   * Clone's the angular velocity input stream and converts it to a fieldRelative
+   * input stream.
    */
   SwerveInputStream driveDirectAngle = driveAngularVelocity.copy()
-    .withControllerHeadingAxis(driverController::getRightX, driverController::getRightY)
-    .headingWhile(true);
+      .withControllerHeadingAxis(driverController::getRightX, driverController::getRightY)
+      .headingWhile(true);
 
   /**
-   * Clone's the angular velocity input stream and converts it to a robotRelative input stream.
+   * Clone's the angular velocity input stream and converts it to a robotRelative
+   * input stream.
    */
   SwerveInputStream driveRobotOriented = driveAngularVelocity.copy()
-    .robotRelative(true)
-    .allianceRelativeControl(false);
+      .robotRelative(true)
+      .allianceRelativeControl(false);
 
-  SwerveInputStream driveAngularVelocityKeyboard = 
-        SwerveInputStream.of(drivebase.getSwerveDrive(),
-            () -> -driverController.getLeftY(),
-            () -> -driverController.getLeftX())
-        .withControllerRotationAxis(
-            () -> driverController.getRawAxis(2))
-        .deadband(Constants.Controller.kThreshold)
-        .scaleTranslation(0.8)
-        .allianceRelativeControl(true);
+  SwerveInputStream driveAngularVelocityKeyboard = SwerveInputStream.of(drivebase.getSwerveDrive(),
+      () -> -driverController.getLeftY(),
+      () -> -driverController.getLeftX())
+      .withControllerRotationAxis(
+          () -> driverController.getRawAxis(2))
+      .deadband(Constants.Controller.kThreshold)
+      .scaleTranslation(0.8)
+      .allianceRelativeControl(true);
 
   // Derive the heading axis with math!
   SwerveInputStream driveDirectAngleKeyboard = driveAngularVelocityKeyboard.copy()
-        .withControllerHeadingAxis(
-          () ->
-              Math.sin(
-                  driverController.getRawAxis(2) * Math.PI) * (Math.PI * 2),
-          () ->
-              Math.cos(
-                  driverController.getRawAxis(2) * Math.PI) * (Math.PI * 2))
-        .headingWhile(true)
-        .translationHeadingOffset(true)
-        .translationHeadingOffset(Rotation2d.fromDegrees(0));
+      .withControllerHeadingAxis(
+          () -> Math.sin(
+              driverController.getRawAxis(2) * Math.PI) * (Math.PI * 2),
+          () -> Math.cos(
+              driverController.getRawAxis(2) * Math.PI) * (Math.PI * 2))
+      .headingWhile(true)
+      .translationHeadingOffset(true)
+      .translationHeadingOffset(Rotation2d.fromDegrees(0));
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  /**
+   * The container for the robot. Contains subsystems, OI devices, and commands.
+   */
   public RobotContainer() {
-      NamedCommands.registerCommand("RunIntakeCommand", new RunIntakeCommand(intakeSubsystem));
-    //  // CF Note: Changed this from a Shooter method call to `new RunShooterManualCommand` to stop the runtime errors
-    //     NamedCommands.registerCommand("RunS6hooterManualCommand",new RunShooterManualCommand(shooterSubsystem,0.8));
-         NamedCommands.registerCommand("RunStagingCommand", new RunStagingCommand(stagingSubsystem));
-        NamedCommands.registerCommand("RunConveyanceCommand", new RunConveyanceCommand(conveyanceSubsystem));
-        NamedCommands.registerCommand("RunDeployCommand",new DeployIntakeCommand(intakeSubsystem, -0.25).withTimeout(1.0));
-              
-           // TODO Auto-generated method stub
-          //  throw new UnsupportedOperationException("Unimplemented method 'configureButtonBindings'");
-         
-    
+    NamedCommands.registerCommand("RunIntakeCommand", new RunIntakeCommand(intakeSubsystem));
+    // // CF Note: Changed this from a Shooter method call to `new
+    // RunShooterManualCommand` to stop the runtime errors
+    // NamedCommands.registerCommand("RunS6hooterManualCommand",new
+    // RunShooterManualCommand(shooterSubsystem,0.8));
+    NamedCommands.registerCommand("RunStagingCommand", new RunStagingCommand(stagingSubsystem));
+    NamedCommands.registerCommand("RunConveyanceCommand", new RunConveyanceCommand(conveyanceSubsystem));
+    NamedCommands.registerCommand("RunDeployCommand", new DeployIntakeCommand(intakeSubsystem, -0.25).withTimeout(1.0));
+
+    // TODO Auto-generated method stub
+    // throw new UnsupportedOperationException("Unimplemented method
+    // 'configureButtonBindings'");
+
     configureBindings();
-    
+
     drivebase.setupPathPlanner();
-    NamedCommands.registerCommand("RunShooterManualCommand",new RunShooterManualCommand(shooterSubsystem, 0.8));
-    
+    NamedCommands.registerCommand("RunShooterManualCommand", new RunShooterManualCommand(shooterSubsystem, 0.8));
+
     autoChooser = AutoBuilder.buildAutoChooser();
 
     // autoChooser.addOption("Drive Back", DriveBackwardTimed());
 
-    //Set the default auto (do nothing) 
+    // Set the default auto (do nothing)
 
-    //Put the autoChooser on the SmartDashboard
+    // Put the autoChooser on the SmartDashboard
     SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 
   /**
-   * Use this method to define your trigger->command mappings. Triggers can be created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
+   * Use this method to define your trigger->command mappings. Triggers can be
+   * created via the
+   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with
+   * an arbitrary
    * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
+   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for
+   * {@link
+   * CommandXboxController
+   * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
+   * PS4} controllers or
+   * {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
    * joysticks}.
    */
   private void configureBindings() {
     // EXAMPLES
-    // trigger_leftBumper.onTrue(new InstantCommand(() -> intakeSubsystem.runIntake(Constants.IntakeConstants.runIntakeReverse)));
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
+    // trigger_leftBumper.onTrue(new InstantCommand(() ->
+    // intakeSubsystem.runIntake(Constants.IntakeConstants.runIntakeReverse)));
+    // Schedule `exampleMethodCommand` when the Xbox controller's B button is
+    // pressed,
     // cancelling on release.
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
 
-    /******************************* INTAKE TRIGGERS  *******************************/
+    /*******************************
+     * INTAKE TRIGGERS
+     *******************************/
     // Run Intake
     Trigger opTrigger_leftTrigger = operatorController.leftTrigger(Constants.Controller.kMinThreshold);
-    // Trigger opTrigger_leftTrigger = new Trigger(() -> Math.abs(opInput_leftTrigger) > Constants.Controller.kMinThreshold);
+    // Trigger opTrigger_leftTrigger = new Trigger(() ->
+    // Math.abs(opInput_leftTrigger) > Constants.Controller.kMinThreshold);
     // Run Intake Reverse
     Trigger opTrigger_leftBumper = new Trigger(() -> operatorController.leftBumper().getAsBoolean());
     // Deploy Intake
     Trigger opTrigger_up = new Trigger(() -> operatorController.povUp().getAsBoolean());
-    Trigger opTrigger_down = new Trigger (() -> operatorController.povDown().getAsBoolean());
+    Trigger opTrigger_down = new Trigger(() -> operatorController.povDown().getAsBoolean());
 
-    /******************************* INTAKE BINDINGS  *******************************/
+    /*******************************
+     * INTAKE BINDINGS
+     *******************************/
     // Run Intake
     opTrigger_leftTrigger.whileTrue(new RunIntakeCommand(intakeSubsystem));
     // Run Intake Reverse
@@ -213,29 +237,38 @@ public class RobotContainer {
     // Deploy Intake - IN
     opTrigger_down.whileTrue(new DeployIntakeCommand(intakeSubsystem, -0.25));
 
-    /******************************* CONVEYANCE TRIGGERS  *******************************/
+    /*******************************
+     * CONVEYANCE TRIGGERS
+     *******************************/
     // Run Conveyance (fwd & rev)
     Trigger opTrigger_leftY = operatorController.axisMagnitudeGreaterThan(1, Constants.Controller.kThreshold);
 
-    /******************************* CONVEYANCE BINDINGS  *******************************/
+    /*******************************
+     * CONVEYANCE BINDINGS
+     *******************************/
     // Run Conveyance (fwd & rev)
     opTrigger_leftY.whileTrue(new RunConveyanceCommand(conveyanceSubsystem));
 
-    /******************************* SHOOTER TRIGGERS  *******************************/
+    /*******************************
+     * SHOOTER TRIGGERS
+     *******************************/
     // Run Staging Motor
     Trigger opTrigger_rightY = operatorController.axisMagnitudeGreaterThan(5, Constants.Controller.kThreshold);
 
     opTrigger_rightY.whileTrue(new RunConveyanceCommand(conveyanceSubsystem));
     // Reverse Shooter
-    // Trigger opTrigger_rightBumper = new Trigger(() -> operatorController.rightBumper().getAsBoolean());
+    // Trigger opTrigger_rightBumper = new Trigger(() ->
+    // operatorController.rightBumper().getAsBoolean());
     // Run Shooter
     Trigger opTrigger_rightTrigger = operatorController.rightTrigger(Constants.Controller.kMinThreshold);
-    /******************************* SHOOTER BINDINGS  *******************************/
+    /*******************************
+     * SHOOTER BINDINGS
+     *******************************/
     // Run Staging Motor
     // FIXME: add target velocity conditional
     opTrigger_rightY.whileTrue(new RunStagingCommand(stagingSubsystem));
     // Run Shooter
-    opTrigger_rightTrigger.toggleOnTrue(new RunShooterManualCommand(shooterSubsystem,.9));
+    opTrigger_rightTrigger.toggleOnTrue(new RunShooterManualCommand(shooterSubsystem, .9));
     // Reverse Shooter
     operatorController.rightBumper().whileTrue(new RunShooterManualCommand(shooterSubsystem, -0.5));
     // Change Angle - Long Shot
@@ -243,47 +276,45 @@ public class RobotContainer {
     // Change Angle - Close Shot
     operatorController.a().whileTrue(new SetHoodAngleManualCommand(shooterSubsystem, -0.15));
 
-    /******************************* Swerve BINDINGS  *******************************/
-    Command driveFieldOrientedDirectAngle      = drivebase.driveFieldOriented(driveDirectAngle);
+    /*******************************
+     * Swerve BINDINGS
+     *******************************/
+    Command driveFieldOrientedDirectAngle = drivebase.driveFieldOriented(driveDirectAngle);
     Command driveFieldOrientedAnglularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
-    Command driveRobotOrientedAngularVelocity  = drivebase.driveFieldOriented(driveRobotOriented);
-    Command driveFieldOrientedDirectAngleKeyboard      = drivebase.driveFieldOriented(driveDirectAngleKeyboard);
+    Command driveRobotOrientedAngularVelocity = drivebase.driveFieldOriented(driveRobotOriented);
+    Command driveFieldOrientedDirectAngleKeyboard = drivebase.driveFieldOriented(driveDirectAngleKeyboard);
     Command driveFieldOrientedAnglularVelocityKeyboard = drivebase.driveFieldOriented(driveAngularVelocityKeyboard);
-   driverController.y().whileTrue(Commands.runEnd(()->moddedDriveState.slowmode=true,()->moddedDriveState.slowmode=false ));
+    driverController.y()
+        .whileTrue(Commands.runEnd(() -> moddedDriveState.slowmode = true, () -> moddedDriveState.slowmode = false));
 
-    if (RobotBase.isSimulation())
-    {
+    if (RobotBase.isSimulation()) {
       drivebase.setDefaultCommand(driveFieldOrientedDirectAngleKeyboard);
-    } else
-    {
+    } else {
       drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
     }
 
-    if (Robot.isSimulation())
-    {
+    if (Robot.isSimulation()) {
       Pose2d target = new Pose2d(new Translation2d(1, 4),
-                                 Rotation2d.fromDegrees(90));
-      //drivebase.getSwerveDrive().field.getObject("targetPose").setPose(target);
+          Rotation2d.fromDegrees(90));
+      // drivebase.getSwerveDrive().field.getObject("targetPose").setPose(target);
       driveDirectAngleKeyboard.driveToPose(() -> target,
-            new ProfiledPIDController(5,
-                                      0,
-                                      0,
-                                      new Constraints(5, 2)),
-            new ProfiledPIDController(5,
-                                      0,
-                                      0,
-                                      new Constraints(Units.degreesToRadians(360),
-                                                      Units.degreesToRadians(180))
-            ));
+          new ProfiledPIDController(5,
+              0,
+              0,
+              new Constraints(5, 2)),
+          new ProfiledPIDController(5,
+              0,
+              0,
+              new Constraints(Units.degreesToRadians(360),
+                  Units.degreesToRadians(180))));
       driverController.start().onTrue(Commands.runOnce(
-        () -> drivebase.resetOdometry(new Pose2d(3, 3, new Rotation2d()))));
+          () -> drivebase.resetOdometry(new Pose2d(3, 3, new Rotation2d()))));
       driverController.button(1).whileTrue(drivebase.sysIdDriveMotorCommand());
       driverController.button(2).whileTrue(Commands.runEnd(
-        () -> driveDirectAngleKeyboard.driveToPoseEnabled(true),
-        () -> driveDirectAngleKeyboard.driveToPoseEnabled(false)));
+          () -> driveDirectAngleKeyboard.driveToPoseEnabled(true),
+          () -> driveDirectAngleKeyboard.driveToPoseEnabled(false)));
     }
-    if (DriverStation.isTest())
-    {
+    if (DriverStation.isTest()) {
       drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity); // Overrides drive command above!
 
       driverController.x().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
@@ -291,8 +322,7 @@ public class RobotContainer {
       driverController.back().whileTrue(drivebase.centerModulesCommand());
       driverController.leftBumper().onTrue(Commands.none());
       driverController.rightBumper().onTrue(Commands.none());
-    } else
-    {
+    } else {
       driverController.a().onTrue((Commands.runOnce(drivebase::zeroGyro)));
       driverController.start().whileTrue(Commands.none());
       driverController.back().whileTrue(Commands.none());
@@ -300,27 +330,27 @@ public class RobotContainer {
       driverController.rightBumper().onTrue(Commands.none());
     }
 
-  // /**
-  //  * Use this to pass the autonomous command to the main {@link Robot} class.
-  //  *
-  //  * @return the command to run in autonomous
-  //  */
-  // public Command getAutonomousCommand()
-  // {
-  //   // Pass in the selected auto from the SmartDashboard as our desired autnomous commmand 
-  //   return autoChooser.getSelected();
-  // }
+    // /**
+    // * Use this to pass the autonomous command to the main {@link Robot} class.
+    // *
+    // * @return the command to run in autonomous
+    // */
+    // public Command getAutonomousCommand()
+    // {
+    // // Pass in the selected auto from the SmartDashboard as our desired autnomous
+    // commmand
+    // return autoChooser.getSelected();
+    // }
 
-  // public void setMotorBrake(boolean brake)
-  // {
-  //   drivebase.setMotorBrake(brake);
-  // }
-  // // SwerveInputStream angularVelocity; 
+    // public void setMotorBrake(boolean brake)
+    // {
+    // drivebase.setMotorBrake(brake);
+    // }
+    // // SwerveInputStream angularVelocity;
 
   }
 
-  public void periodic()
-  {
+  public void periodic() {
     opInput_leftY = operatorController.getLeftY();
     opInput_rightY = operatorController.getRightY();
     opInput_leftTrigger = operatorController.getLeftTriggerAxis();
@@ -334,7 +364,8 @@ public class RobotContainer {
     conveyanceSubsystem.setLeftY(opInput_leftY);
     // stagingSubsystem.setRightY(opInput_rightY);
   }
-public Command getAutonomousCommand() {
+
+  public Command getAutonomousCommand() {
     return autoChooser.getSelected();
     // return new PathPlannerAuto("Test Auto");
   }

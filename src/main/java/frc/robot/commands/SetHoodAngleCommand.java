@@ -16,7 +16,7 @@ public class SetHoodAngleCommand extends Command {
   /**
    * Creates a new SetHoodAngleCommand.
    *
-   * @param subsystem The subsystem used by this command.
+   * @param subsystem   The subsystem used by this command.
    * @param targetAngle The speed to run the conveyance, as a double
    */
   public SetHoodAngleCommand(Shooter subsystem, double targetAngle) {
@@ -28,7 +28,8 @@ public class SetHoodAngleCommand extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

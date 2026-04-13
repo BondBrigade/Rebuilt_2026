@@ -19,7 +19,7 @@ public class RunConveyanceCommand extends Command {
   /**
    * Creates a new RunConveyanceCommand.
    *
-   * @param subsystem The subsystem used by this command.
+   * @param subsystem  The subsystem used by this command.
    * @param inputSpeed The speed to run the conveyance, as a double
    */
   public RunConveyanceCommand(Conveyance subsystem) {
@@ -31,7 +31,8 @@ public class RunConveyanceCommand extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -40,23 +41,27 @@ public class RunConveyanceCommand extends Command {
     double right = conveyanceSubsystem.opInput_RightY;
     // double left = conveyanceSubsystem.opInput_LeftY;
 
-    if (right > 0.1 || right < -0.1) inputSpeed = right; 
-    else                             inputSpeed = conveyanceSubsystem.opInput_LeftY;
-    // if (left > 0.1 || left < -0.1) inputSpeed = left; 
+    if (right > 0.1 || right < -0.1)
+      inputSpeed = right;
+    else
+      inputSpeed = conveyanceSubsystem.opInput_LeftY;
+    // if (left > 0.1 || left < -0.1) inputSpeed = left;
 
     // if (Math.abs(right) > 0.1)
     // {
-    //   inputSpeed = right;
+    // inputSpeed = right;
     // }
     // else if (Math.abs(left) > 0.1)
     // {
-    //   inputSpeed = left;
+    // inputSpeed = left;
     // }
-    // else 
+    // else
     // {
-    //   inputSpeed = 0;
+    // inputSpeed = 0;
     // }
-    if(DriverStation.isAutonomous()){inputSpeed=-0.8;}
+    if (DriverStation.isAutonomous()) {
+      inputSpeed = -0.8;
+    }
 
     conveyanceSubsystem.runConveyance(inputSpeed);
   }

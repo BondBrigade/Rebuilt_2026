@@ -19,7 +19,7 @@ public class RunStagingCommand extends Command {
   /**
    * Creates a new RunStagingCommand.
    *
-   * @param subsystem The subsystem used by this command.
+   * @param subsystem  The subsystem used by this command.
    * @param inputSpeed The speed to run the conveyance, as a double
    */
   public RunStagingCommand(Staging subsystem) {
@@ -30,14 +30,17 @@ public class RunStagingCommand extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     inputSpeed = stagingSubsystem.opInput_RightY;
-        if(DriverStation.isAutonomous()){inputSpeed=-0.5;}
-System.out.println("staging");
+    if (DriverStation.isAutonomous()) {
+      inputSpeed = -0.5;
+    }
+    System.out.println("staging");
     stagingSubsystem.runStagingMotor(inputSpeed);
   }
 

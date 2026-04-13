@@ -16,7 +16,7 @@ public class SetHoodAngleManualCommand extends Command {
   /**
    * Creates a new SetHoodAngleCommand.
    *
-   * @param subsystem The subsystem used by this command.
+   * @param subsystem   The subsystem used by this command.
    * @param targetAngle The speed to run the conveyance, as a double
    */
   public SetHoodAngleManualCommand(Shooter subsystem, double speed) {
@@ -28,7 +28,8 @@ public class SetHoodAngleManualCommand extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -39,7 +40,7 @@ public class SetHoodAngleManualCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-     shooterSubsystem.setHoodAngleManual(0);
+    shooterSubsystem.setHoodAngleManual(0);
   }
 
   // Returns true when the command should end.

@@ -25,13 +25,11 @@ public class Intake extends SubsystemBase {
     intakeMotor = new SparkMax(Constants.Intake.intakeMotorId, MotorType.kBrushless);
   }
 
-  public void deployIntake(double speed)
-  {
+  public void deployIntake(double speed) {
     this.deployIntakeMotor.set(speed);
   }
 
-  public void runIntake(double inputSpeed)
-  {
+  public void runIntake(double inputSpeed) {
     this.intakeMotor.set(-inputSpeed);
   }
 
@@ -50,7 +48,8 @@ public class Intake extends SubsystemBase {
   }
 
   /**
-   * An example method querying a boolean state of the subsystem (for example, a digital sensor).
+   * An example method querying a boolean state of the subsystem (for example, a
+   * digital sensor).
    *
    * @return value of some boolean subsystem state, such as a digital sensor.
    */
@@ -69,13 +68,11 @@ public class Intake extends SubsystemBase {
     // This method will be called once per scheduler run during simulation
   }
 
-  public void setLeftTrigger(double arg)
-  {
+  public void setLeftTrigger(double arg) {
     opInput_leftTrigger = arg;
   }
 
-  public void setLeftY(double arg)
-  {
+  public void setLeftY(double arg) {
     opInput_leftY = arg;
   }
 

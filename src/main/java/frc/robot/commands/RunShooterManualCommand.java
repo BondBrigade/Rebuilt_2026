@@ -21,7 +21,7 @@ public class RunShooterManualCommand extends Command {
    * Creates a new RunShooterManualCommand.
    *
    * @param subsystem The subsystem used by this command.
-   * @param speed The speed to run the motor, in reverse as a percentage
+   * @param speed     The speed to run the motor, in reverse as a percentage
    */
   public RunShooterManualCommand(Shooter subsystem, double inputSpeed) {
     shooterSubsystem = subsystem;
@@ -40,12 +40,14 @@ public class RunShooterManualCommand extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (sourceIsTrigger) inputSpeed = shooterSubsystem.opInput_rightTrigger * 0.95;
+    if (sourceIsTrigger)
+      inputSpeed = shooterSubsystem.opInput_rightTrigger * 0.95;
 
     shooterSubsystem.runShooterManual(inputSpeed);
   }

@@ -13,16 +13,15 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 public class Conveyance extends SubsystemBase {
   private SparkMax conveyanceMotor;
-  public double opInput_RightY  = 0;
-  public double opInput_LeftY  = 0;
+  public double opInput_RightY = 0;
+  public double opInput_LeftY = 0;
 
   /** Creates a new Conveyance Subsystem. */
   public Conveyance() {
     conveyanceMotor = new SparkMax(Constants.Conveyance.conveyanceMotorId, MotorType.kBrushless);
   }
 
-  public void runConveyance(double speed)
-  {
+  public void runConveyance(double speed) {
     this.conveyanceMotor.set(speed);
   }
 
@@ -41,7 +40,8 @@ public class Conveyance extends SubsystemBase {
   }
 
   /**
-   * An example method querying a boolean state of the subsystem (for example, a digital sensor).
+   * An example method querying a boolean state of the subsystem (for example, a
+   * digital sensor).
    *
    * @return value of some boolean subsystem state, such as a digital sensor.
    */
@@ -59,18 +59,16 @@ public class Conveyance extends SubsystemBase {
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
   }
-public void setLeftY(double arg)
-  {
+
+  public void setLeftY(double arg) {
     opInput_LeftY = arg;
   }
 
-  public void setRightY(double arg)
-  {
+  public void setRightY(double arg) {
     opInput_RightY = arg;
   }
 
-  public Runnable autoRun(double arg)
-  {
+  public Runnable autoRun(double arg) {
     opInput_LeftY = arg;
     opInput_RightY = arg * Constants.Conveyance.conveyanceSpeedModifier;
     return null;

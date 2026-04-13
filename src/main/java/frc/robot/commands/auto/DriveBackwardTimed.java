@@ -21,15 +21,15 @@ public class DriveBackwardTimed extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      // drive backward
-      new InstantCommand (() -> drivebase.driveFieldOriented(velocity)),
+        // drive backward
+        new InstantCommand(() -> drivebase.driveFieldOriented(velocity)),
 
-      // wait for 1 second
-      new WaitCommand(0.5),
+        // wait for 1 second
+        new WaitCommand(0.5),
 
-      // stop
-      new InstantCommand(() -> drivebase.driveFieldOriented(new ChassisSpeeds(0, 0, 0)))
-      
+        // stop
+        new InstantCommand(() -> drivebase.driveFieldOriented(new ChassisSpeeds(0, 0, 0)))
+
     );
   }
 }

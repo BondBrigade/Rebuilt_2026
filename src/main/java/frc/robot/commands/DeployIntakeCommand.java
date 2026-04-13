@@ -18,7 +18,7 @@ public class DeployIntakeCommand extends Command {
    * Creates a new DeployIntakeCommand.
    *
    * @param subsystem The intake subsystem
-   * @param speed as a percentage of power to set motor speed to
+   * @param speed     as a percentage of power to set motor speed to
    */
   public DeployIntakeCommand(Intake subsystem, double speed) {
     intakeSubsystem = subsystem;
@@ -29,7 +29,8 @@ public class DeployIntakeCommand extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

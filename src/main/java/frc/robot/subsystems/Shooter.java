@@ -44,39 +44,35 @@ public class Shooter extends SubsystemBase {
     hoodAngleEncoder = new DutyCycleEncoder(new DigitalInput(Constants.Shooter.digitalInputChannel));
 
     // Angle PID
-    angle_pidController = 
-      new PIDController(Constants.Shooter.angle_kP, Constants.Shooter.angle_kI, Constants.Shooter.angle_kD);
+    angle_pidController = new PIDController(Constants.Shooter.angle_kP, Constants.Shooter.angle_kI,
+        Constants.Shooter.angle_kD);
 
     // Shooter PID
     shooter_pidController = shooterMotor.getClosedLoopController();
     config = new SparkFlexConfig();
     config.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder);
     config.closedLoop
-      .p(Constants.Shooter.shooter_kP)
-      .i(Constants.Shooter.shooter_kI)
-      .d(Constants.Shooter.shooter_kD)
-      .outputRange(-1, 1).velocityFF(1.0/6784.0);
-      shooterMotor.configure(config,ResetMode.kNoResetSafeParameters,PersistMode.kPersistParameters);
+        .p(Constants.Shooter.shooter_kP)
+        .i(Constants.Shooter.shooter_kI)
+        .d(Constants.Shooter.shooter_kD)
+        .outputRange(-1, 1).velocityFF(1.0 / 6784.0);
+    shooterMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
 
-
-      Shuffleboard.getTab("logging").addDouble("shooter_velocity", shooterMotor.getEncoder()::getVelocity);
+    Shuffleboard.getTab("logging").addDouble("shooter_velocity", shooterMotor.getEncoder()::getVelocity);
 
   }
 
-
-  public void runShooterManual(double speed)
-  {
-    shooter_pidController.setSetpoint(speed*5676.0,ControlType.kVelocity);
+  public void runShooterManual(double speed) {
+    shooter_pidController.setSetpoint(speed * 5676.0, ControlType.kVelocity);
   }
 
-  public void setHoodAngle(double targetAngle)
-  {
+  public void setHoodAngle(double targetAngle) {
     // Calculate PID output using encoder (current angle) and target angle
     double output = angle_pidController.calculate(hoodAngleEncoder.get(), targetAngle);
     hoodAngleMotor.set(output);
   }
 
-  public void setHoodAngleManual(double speed){
+  public void setHoodAngleManual(double speed) {
     hoodAngleMotor.set(speed);
   }
 
@@ -95,7 +91,8 @@ public class Shooter extends SubsystemBase {
   }
 
   /**
-   * An example method querying a boolean state of the subsystem (for example, a digital sensor).
+   * An example method querying a boolean state of the subsystem (for example, a
+   * digital sensor).
    *
    * @return value of some boolean subsystem state, such as a digital sensor.
    */
@@ -114,12 +111,11 @@ public class Shooter extends SubsystemBase {
     // This method will be called once per scheduler run during simulation
   }
 
-  public void setRightTrigger(double arg)
-  {
+  public void setRightTrigger(double arg) {
     opInput_rightTrigger = arg;
   }
-    public Runnable autoRun(double arg)
-  {
+
+  public Runnable autoRun(double arg) {
     opInput_rightTrigger = arg;
     return null;
   }

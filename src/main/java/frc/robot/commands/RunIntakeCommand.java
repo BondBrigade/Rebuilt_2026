@@ -18,7 +18,7 @@ public class RunIntakeCommand extends Command {
   /**
    * Creates a new RunIntakeCommand.
    *
-   * @param subsystem The intake subsystem
+   * @param subsystem  The intake subsystem
    * @param inputSpeed The speed to run the intake, as a double
    */
   public RunIntakeCommand(Intake subsystem, double inputSpeed) {
@@ -29,7 +29,7 @@ public class RunIntakeCommand extends Command {
     addRequirements(subsystem);
   }
 
-    public RunIntakeCommand(Intake subsystem) {
+  public RunIntakeCommand(Intake subsystem) {
     intakeSubsystem = subsystem;
     sourceIsTrigger = true;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -38,13 +38,15 @@ public class RunIntakeCommand extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    if (sourceIsTrigger) inputSpeed = intakeSubsystem.opInput_leftTrigger * -0.95;
+    if (sourceIsTrigger)
+      inputSpeed = intakeSubsystem.opInput_leftTrigger * -0.95;
 
     intakeSubsystem.runIntake(inputSpeed);
   }

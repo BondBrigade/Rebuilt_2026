@@ -20,8 +20,7 @@ public class ShootAuto extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new RunConveyanceCommand(conveyance)
-    );
+        new RunConveyanceCommand(conveyance));
 
   }
 }
