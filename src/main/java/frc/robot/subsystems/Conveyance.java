@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -76,7 +77,7 @@ public class Conveyance extends SubsystemBase {
 
   public static Command RunConveyanceCommand() {
     // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'RunConveyanceCommand'");
+    return Commands.print("Unimplemented method 'RunConveyanceCommand'. I will be merciful and not crash your code. ").repeatedly();
   }
 
 }

@@ -27,10 +27,7 @@ public class Staging extends SubsystemBase {
 
   public static Command RunStagingCommand() {
     // TODO Auto-generated method stub
-    // throw new UnsupportedOperationException("Unimplemented method
-    // 'RunStagingCommand'");
-    // CF Note: Changed to Commands.none() to stop runtime errors.
-    return Commands.none();
+    return Commands.print("Unimplemented method 'RunStagingCommand'. I will be merciful and not crash your code. ").repeatedly();
   }
 
 }
