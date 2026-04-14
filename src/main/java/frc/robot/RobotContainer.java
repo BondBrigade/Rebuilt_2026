@@ -5,6 +5,9 @@
 package frc.robot;
 
 import java.io.File;
+import java.util.Set;
+import java.util.function.Supplier;
+
 import frc.robot.commands.DeployIntakeCommand;
 import frc.robot.commands.RunConveyanceCommand;
 import frc.robot.commands.RunIntakeCommand;
@@ -30,6 +33,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.math.util.Units;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -93,26 +97,26 @@ public class RobotContainer {
   private final SwerveSubsystem drivebase = new SwerveSubsystem(
       new File(Filesystem.getDeployDirectory(), "swerve/neo"));
 
+  // This class stores certian settings that modify driving, such as slow mode. It
+  // is done as a class so that java can access it as a reference and be mutated
+  // by controller buttons.
+  class ModdedDriveState {
+    public boolean slowmode = false;
+  }
+
+  ModdedDriveState driveStateMods = new ModdedDriveState();
+
   /**
    * Converts driver input into a field-relative ChassisSpeeds that is controlled
    * by angular velocity.
    */
-  class ModdedDriveState {
-    public boolean slowmode = false;
-
-    public ModdedDriveState() {
-    }
-  }
-
-  ModdedDriveState moddedDriveState = new ModdedDriveState();
-
   SwerveInputStream driveAngularVelocity = SwerveInputStream.of(
       drivebase.getSwerveDrive(),
-      () -> driverController.getLeftY() * -1 * (moddedDriveState.slowmode ? 0.5 : 1.0),
-      () -> driverController.getLeftX() * -1 * (moddedDriveState.slowmode ? 0.5 : 1.0))
-      .withControllerRotationAxis(() -> driverController.getRightX() * -1 * (moddedDriveState.slowmode ? 0.5 : 1.0))
+      () -> (driverController.getLeftY() * -1 * (driveStateMods.slowmode ? Constants.Swerve.slowModeModifier : 1.0)),
+      () -> driverController.getLeftX() * -1 * (driveStateMods.slowmode ? Constants.Swerve.slowModeModifier : 1.0))
+      .withControllerRotationAxis(
+          () -> driverController.getRightX() * -1 * (driveStateMods.slowmode ? Constants.Swerve.slowModeModifier : 1.0))
       .deadband(Constants.Controller.kThreshold)
-
       .scaleTranslation(0.8)
       .allianceRelativeControl(true);
 
@@ -157,22 +161,13 @@ public class RobotContainer {
    */
   public RobotContainer() {
     NamedCommands.registerCommand("RunIntakeCommand", new RunIntakeCommand(intakeSubsystem));
-    // // CF Note: Changed this from a Shooter method call to `new
-    // RunShooterManualCommand` to stop the runtime errors
-    // NamedCommands.registerCommand("RunS6hooterManualCommand",new
-    // RunShooterManualCommand(shooterSubsystem,0.8));
     NamedCommands.registerCommand("RunStagingCommand", new RunStagingCommand(stagingSubsystem));
     NamedCommands.registerCommand("RunConveyanceCommand", new RunConveyanceCommand(conveyanceSubsystem));
     NamedCommands.registerCommand("RunDeployCommand", new DeployIntakeCommand(intakeSubsystem, -0.25).withTimeout(1.0));
-
-    // TODO Auto-generated method stub
-    // throw new UnsupportedOperationException("Unimplemented method
-    // 'configureButtonBindings'");
-
+    NamedCommands.registerCommand("RunShooterManualCommand", new RunShooterManualCommand(shooterSubsystem, 0.8));
     configureBindings();
 
     drivebase.setupPathPlanner();
-    NamedCommands.registerCommand("RunShooterManualCommand", new RunShooterManualCommand(shooterSubsystem, 0.8));
 
     autoChooser = AutoBuilder.buildAutoChooser();
 
@@ -199,6 +194,7 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+    SmartDashboard.putNumber("shooterspeed", 0.9);
     // EXAMPLES
     // trigger_leftBumper.onTrue(new InstantCommand(() ->
     // intakeSubsystem.runIntake(Constants.IntakeConstants.runIntakeReverse)));
@@ -263,7 +259,24 @@ public class RobotContainer {
     // FIXME: add target velocity conditional
     opTrigger_rightY.whileTrue(new RunStagingCommand(stagingSubsystem));
     // Run Shooter
-    opTrigger_rightTrigger.toggleOnTrue(new RunShooterManualCommand(shooterSubsystem, .9));
+    opTrigger_rightTrigger.toggleOnTrue(Commands.defer(
+        new Supplier<Command>() {
+          double ll_val = 0.0;
+
+          @Override
+          public Command get() {
+            if (LimelightHelpers.getTA("limelight") != 0.0) {
+              ll_val = LimelightHelpers.getTA("limelight")
+                  * drivebase.getPose().getRotation()
+                  //.plus(Rotation2d.k180deg)
+                  .getCos();
+            }
+            System.out.println(ll_val);
+
+            return new RunShooterManualCommand(shooterSubsystem, Math.max(ll_val * -0.937 + 0.807, 0.62));
+          }
+        },
+        Set.of(shooterSubsystem)));
     // Reverse Shooter
     operatorController.rightBumper().whileTrue(new RunShooterManualCommand(shooterSubsystem, -0.5));
     // Change Angle - Long Shot
@@ -280,7 +293,7 @@ public class RobotContainer {
     Command driveFieldOrientedDirectAngleKeyboard = drivebase.driveFieldOriented(driveDirectAngleKeyboard);
     Command driveFieldOrientedAnglularVelocityKeyboard = drivebase.driveFieldOriented(driveAngularVelocityKeyboard);
     driverController.y()
-        .whileTrue(Commands.runEnd(() -> moddedDriveState.slowmode = true, () -> moddedDriveState.slowmode = false));
+        .toggleOnTrue(Commands.runEnd(() -> driveStateMods.slowmode = true, () -> driveStateMods.slowmode = false));
 
     if (RobotBase.isSimulation()) {
       drivebase.setDefaultCommand(driveFieldOrientedDirectAngleKeyboard);

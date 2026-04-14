@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import frc.robot.Constants;
 import frc.robot.subsystems.Conveyance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -58,7 +59,7 @@ public class RunConveyanceCommand extends Command {
     // inputSpeed = 0;
     // }
     if (DriverStation.isAutonomous()) {
-      inputSpeed = -0.8;
+      inputSpeed = Constants.Conveyance.conveyanceAutoSpeed;
     }
 
     conveyanceSubsystem.runConveyance(inputSpeed);

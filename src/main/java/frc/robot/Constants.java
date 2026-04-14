@@ -40,6 +40,7 @@ public final class Constants {
   public static class Conveyance {
     public static final int conveyanceMotorId = 23;
     public static final double conveyanceSpeedModifier = 0.8;
+    public static final double conveyanceAutoSpeed = -0.8;
   }
 
   public static class Shooter {
@@ -47,7 +48,7 @@ public final class Constants {
     public static final int hoodAngleMotorId = 32;
     public static final int shooterMotorId = 33;
     public static final int digitalInputChannel = 0;
-    public static final double shooter_kP = 0.5 / 6784.0;
+    public static final double shooter_kP = 1.0 / 6784.0;
     public static final double shooter_kI = 0;
     public static final double shooter_kD = 0;
     public static final double angle_kP = 0.1;
@@ -59,14 +60,16 @@ public final class Constants {
     public static final int shooterCoasting = 1500;
     public static final double longShotAngle = 0.075; // FIXME
     public static final double closeShotAngle = 0.6; // FIXME
+    public static final double autoStagingSpeed=  -0.5;
   }
 
   public static class Swerve {
     public static final double deadband = 0.1;
-    public static final double maxSpeed = Units.feetToMeters(18);
-    public static final double robotMass = (148 - 20.3) * 0.453592; // 32lbs * kg per pound
+    public static final double maxSpeed = Units.feetToMeters(14);
+    public static final double robotMass = 137.0 * 0.453592; // 32lbs * kg per pound
     public static final double loopTime = 0.13; // s,20ms + 110ms sprk max velocity lag
     public static final Matter chassis = new Matter(new Translation3d(0, 0, Units.inchesToMeters(8)), robotMass);
+    public static final double slowModeModifier=0.35;
   }
   // "p": 0.003575,
 

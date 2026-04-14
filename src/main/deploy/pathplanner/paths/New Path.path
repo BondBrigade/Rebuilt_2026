@@ -8,8 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.739774614472124,
-        "y": 7.6447093712930005
+        "x": 3.9043060498220648,
+        "y": 7.2358600237247925
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.4492763938315547,
+        "y": 6.127663107947805
+      },
+      "prevControl": {
+        "x": 2.6856584698811763,
+        "y": 6.0462781331522635
+      },
+      "nextControl": {
+        "x": 2.212894317781933,
+        "y": 6.209048082743347
       },
       "isLocked": false,
       "linkedName": null
@@ -17,11 +33,11 @@
     {
       "anchor": {
         "x": 2.0,
-        "y": 6.5
+        "y": 7.5
       },
       "prevControl": {
-        "x": 0.9133214709371296,
-        "y": 7.124033214709371
+        "x": 1.7499999999999998,
+        "y": 7.5
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,8 +46,8 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.5425531914893595,
-      "rotationDegrees": -40.0
+      "waypointRelativePos": 0.9494680851063807,
+      "rotationDegrees": -50.0
     }
   ],
   "constraintZones": [],
@@ -47,7 +63,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -50.0
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": "Blue Paths",

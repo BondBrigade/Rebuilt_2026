@@ -59,7 +59,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public void runShooterManual(double speed) {
-    shooter_pidController.setSetpoint(speed * 5676.0, ControlType.kVelocity);
+    shooter_pidController.setSetpoint(speed * 6784.0, ControlType.kVelocity); // TODO: see if this is wrong?
   }
 
   public void setHoodAngle(double targetAngle) {
