@@ -121,7 +121,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    System.out.println(LimelightHelpers.getTA("limelight") + " " + LimelightHelpers.getTX("limelight"));
+   // System.out.println(LimelightHelpers.getTA("limelight") + " " + LimelightHelpers.getTX("limelight"));
 
     // System.out.println(LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight").pose);
     // f2d.setRobotPose(LimelightHelpers.getBotPose2d("limelight"));

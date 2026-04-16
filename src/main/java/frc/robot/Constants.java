@@ -65,11 +65,11 @@ public final class Constants {
 
   public static class Swerve {
     public static final double deadband = 0.1;
-    public static final double maxSpeed = Units.feetToMeters(14);
+    public static final double maxSpeed = Units.feetToMeters(8);
     public static final double robotMass = 137.0 * 0.453592; // 32lbs * kg per pound
     public static final double loopTime = 0.13; // s,20ms + 110ms sprk max velocity lag
     public static final Matter chassis = new Matter(new Translation3d(0, 0, Units.inchesToMeters(8)), robotMass);
-    public static final double slowModeModifier=0.35;
+    public static final double slowModeModifier=0.45;
   }
   // "p": 0.003575,
 

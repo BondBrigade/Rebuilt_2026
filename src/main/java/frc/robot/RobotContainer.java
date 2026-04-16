@@ -117,7 +117,7 @@ public class RobotContainer {
       .withControllerRotationAxis(
           () -> driverController.getRightX() * -1 * (driveStateMods.slowmode ? Constants.Swerve.slowModeModifier : 1.0))
       .deadband(Constants.Controller.kThreshold)
-      .scaleTranslation(0.8)
+      .scaleTranslation(0.8).scaleRotation(0.5)
       .allianceRelativeControl(true);
 
   /**
@@ -164,7 +164,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("RunStagingCommand", new RunStagingCommand(stagingSubsystem));
     NamedCommands.registerCommand("RunConveyanceCommand", new RunConveyanceCommand(conveyanceSubsystem));
     NamedCommands.registerCommand("RunDeployCommand", new DeployIntakeCommand(intakeSubsystem, -0.25).withTimeout(1.0));
-    NamedCommands.registerCommand("RunShooterManualCommand", new RunShooterManualCommand(shooterSubsystem, 0.8));
+    NamedCommands.registerCommand("RunShooterManualCommand", new RunShooterManualCommand(shooterSubsystem, 0.62 ));
     configureBindings();
 
     drivebase.setupPathPlanner();
@@ -271,9 +271,9 @@ public class RobotContainer {
                   //.plus(Rotation2d.k180deg)
                   .getCos();
             }
-            System.out.println(ll_val);
+            // System.out.println(ll_val);
 
-            return new RunShooterManualCommand(shooterSubsystem, Math.max(ll_val * -0.937 + 0.807, 0.62));
+            return new RunShooterManualCommand(shooterSubsystem, 0.7);
           }
         },
         Set.of(shooterSubsystem)));
