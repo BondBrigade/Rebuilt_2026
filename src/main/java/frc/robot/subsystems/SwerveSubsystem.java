@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import static edu.wpi.first.units.Units.Meter;
+import static edu.wpi.first.units.Units.Newtons;
 
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -13,7 +14,12 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.units.ForceUnit;
+import edu.wpi.first.units.Unit;
+import edu.wpi.first.units.Units;
+import edu.wpi.first.units.measure.Force;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -121,7 +127,8 @@ public class SwerveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-   // System.out.println(LimelightHelpers.getTA("limelight") + " " + LimelightHelpers.getTX("limelight"));
+    // System.out.println(LimelightHelpers.getTA("limelight") + " " +
+    // LimelightHelpers.getTX("limelight"));
 
     // System.out.println(LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight").pose);
     // f2d.setRobotPose(LimelightHelpers.getBotPose2d("limelight"));
@@ -566,10 +573,31 @@ public class SwerveSubsystem extends SubsystemBase {
           // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
           (speedsRobotRelative, moduleFeedForwards) -> {
             if (enableFeedforward) {
+              var state0 = new SwerveModuleState(
+                  moduleFeedForwards.linearForces()[0].in(Newtons), swerveDrive.getModulePositions()[0].angle);
+              swerveDrive.getModules()[0].applyStateOptimizations(state0);
+              Force t0 = (Units.Newtons.of(state0.speedMetersPerSecond));
+              
+              var state1 = new SwerveModuleState(
+                  moduleFeedForwards.linearForces()[1].in(Newtons), swerveDrive.getModulePositions()[1].angle);
+              swerveDrive.getModules()[1].applyStateOptimizations(state1);
+              Force t1 = (Units.Newtons.of(state1.speedMetersPerSecond));
+              
+              var state2 = new SwerveModuleState(
+                  moduleFeedForwards.linearForces()[2].in(Newtons), swerveDrive.getModulePositions()[2].angle);
+              swerveDrive.getModules()[2].applyStateOptimizations(state2);
+              Force t2 = (Units.Newtons.of(state2.speedMetersPerSecond));
+              
+              var state3 = new SwerveModuleState(
+                  moduleFeedForwards.linearForces()[3].in(Newtons), swerveDrive.getModulePositions()[3].angle);
+              swerveDrive.getModules()[3].applyStateOptimizations(state3);
+              Force t3 = (Units.Newtons.of(state3.speedMetersPerSecond));
+              
+              
               swerveDrive.drive(
                   speedsRobotRelative,
                   swerveDrive.kinematics.toSwerveModuleStates(speedsRobotRelative),
-                  moduleFeedForwards.linearForces());
+                  new Force[]{t0,t1,t2,t3});
             } else {
               swerveDrive.setChassisSpeeds(speedsRobotRelative);
             }

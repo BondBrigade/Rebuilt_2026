@@ -164,7 +164,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("RunStagingCommand", new RunStagingCommand(stagingSubsystem));
     NamedCommands.registerCommand("RunConveyanceCommand", new RunConveyanceCommand(conveyanceSubsystem));
     NamedCommands.registerCommand("RunDeployCommand", new DeployIntakeCommand(intakeSubsystem, -0.25).withTimeout(1.0));
-    NamedCommands.registerCommand("RunShooterManualCommand", new RunShooterManualCommand(shooterSubsystem, 0.62 ));
+    NamedCommands.registerCommand("RunShooterManualCommand", new RunShooterManualCommand(shooterSubsystem, 0.63 ));
     configureBindings();
 
     drivebase.setupPathPlanner();
